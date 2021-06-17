@@ -20,17 +20,38 @@
           rel="noopener noreferrer"
           class="button--grey"
         >
-          GitHub
+          GitHub {{ test }}
         </a>
       </div>
+      <DsComponentFoodzUpSample />
+      <button @click="req()">
+        ddddd
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { DsComponentFoodzUpSample } from 'ds-component-foodz-up'
+import * as bnn from 'ds-method-foodz-up'
+// @ts-ignore
+import { doit } from 'ds-method-foodz-up'
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: { DsComponentFoodzUpSample },
+  computed: {
+    test () {
+      return 'r'
+    }
+  },
+  methods: {
+    async req () {
+      const test = await doit.mamacita()
+      console.log({ bnn, test })
+    }
+  }
+})
 </script>
 
 <style>
