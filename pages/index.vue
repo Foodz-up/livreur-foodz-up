@@ -35,19 +35,20 @@
 import Vue from 'vue'
 import { DsComponentFoodzUpSample } from 'ds-component-foodz-up'
 import * as bnn from 'ds-method-foodz-up'
+// TODO: Make ds-method-foodz-up work with index.d.ts
 // @ts-ignore
-import { doit } from 'ds-method-foodz-up'
+import { bol } from 'ds-method-foodz-up'
 
 export default Vue.extend({
   components: { DsComponentFoodzUpSample },
   computed: {
     test () {
-      return 'r'
+      return bol.mamacita()
     }
   },
   methods: {
     async req () {
-      const test = await doit.mamacita()
+      const test = await bol.mamacita()
       console.log({ bnn, test })
     }
   }

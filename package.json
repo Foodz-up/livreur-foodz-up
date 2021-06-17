@@ -16,7 +16,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
     "ds-component-foodz-up": "^0.0.5",
-    "ds-method-foodz-up": "^0.0.28",
+    "ds-method-foodz-up": "^0.0.36",
     "nuxt": "^2.15.3",
     "vuex-typescript": "^3.0.2"
   },
