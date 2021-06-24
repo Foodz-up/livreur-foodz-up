@@ -142,9 +142,9 @@ export default class Sidebar extends Vue {
       menu: boolean = false;
       phoneMenu: boolean = false;
       navigations: Array<object> = [
-        { title: 'Commandes disponibles', logo: 'ticket', to: 'commandes' },
-        { title: 'Livraison en cours', logo: 'biking', to: 'livraisons' },
-        { title: 'Historique', logo: 'calendar', to: 'historique' }
+        { title: 'Commandes disponibles', logo: 'ticket', to: '/' },
+        { title: 'Livraison en cours', logo: 'biking', to: '/livraisons' },
+        { title: 'Historique', logo: 'calendar', to: '/livraisons/historique' }
       ]
 
       menuToggle () {

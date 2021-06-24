@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 bg-white rounded">
+  <div class="p-5 bg-white rounded sm:flex-none flex flex-col items-center">
     <h1 class="title text-center p-3 text-xl">
       Oubli de mot de passe
     </h1>
@@ -36,14 +36,14 @@ import ButtonFoodzUp from '~/components/Buttons/ButtonFoodzUp.vue'
       components: { InputFoodzUp, ButtonFoodzUp }
     })
 export default class FormAuthentication extends Vue {
-    @Prop({ required: true })
-    email: string;
+    @Prop()
+    email!: string;
 
     @Prop({ default: '' })
-    successMessage: string;
+    successMessage!: string;
 
     @Prop({ default: '' })
-    errorMessage: string;
+    errorMessage!: string;
 
     sendVerificationMail () {
       this.successMessage = 'Un mail de vérification a été envoyé'

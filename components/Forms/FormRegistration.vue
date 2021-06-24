@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 bg-white rounded">
+  <div class="p-5 bg-white rounded sm:flex-none flex flex-col items-center">
     <h1 class="title text-center p-3 text-xl">
       Création de compte
     </h1>
@@ -88,29 +88,29 @@ import ButtonFoodzUp from '~/components/Buttons/ButtonFoodzUp.vue'
       components: { InputFoodzUp, ButtonFoodzUp }
     })
 export default class FormRegistration extends Vue {
-    @Prop({ required: true })
-    firstName: string;
+    @Prop()
+    firstName!: string;
 
-    @Prop({ required: true })
-    lastName: string;
+    @Prop()
+    lastName!: string;
 
-    @Prop({ required: true })
-    email: string;
+    @Prop()
+    email!: string;
 
-    @Prop({ required: true })
-    password: {
+    @Prop()
+    password!: {
         password: string,
         confirmation: string
     }
 
-    @Prop({ required: true })
-    cityCode: string;
+    @Prop()
+    cityCode!: string;
 
-    @Prop({ default: '' })
-    errorMessage: string;
+    @Prop()
+    errorMessage: string = '';
 
     register = () => {
-      if (this.password.password !== this.password.confirmation) {
+      if (this.password.password.length && this.password.password !== this.password.confirmation) {
         this.errorMessage = 'Les mots de passes saisis sont différents'
         return
       }

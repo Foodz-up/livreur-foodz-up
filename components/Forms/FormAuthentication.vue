@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 bg-white rounded">
+  <div class="p-5 bg-white rounded sm:flex-none flex flex-col items-center">
     <h1 class="title text-center p-3 text-xl">
       Connexion
     </h1>
@@ -46,17 +46,17 @@ import ButtonFoodzUp from '~/components/Buttons/ButtonFoodzUp.vue'
       components: { InputFoodzUp, ButtonFoodzUp }
     })
 export default class FormAuthentication extends Vue {
-    @Prop({ required: true })
-    email: string;
+    @Prop()
+    email!: string;
 
-    @Prop({ required: true })
-    password: string;
+    @Prop()
+    password!: string;
 
     @Prop({ default: '' })
-    errorMessage: string;
+    errorMessage!: string;
 
     login () {
-      alert('Connexion utilisateur : ' + this.email)
+      alert('Connexion utilisateur : ' + Prop.arguments.email)
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-container bg-red-pastel h-screen w-screen flex justify-center items-center">
+  <div class="auth-container sm:bg-red-pastel h-screen w-screen sm:flex justify-center items-center flex-none">
     <FormRegistration />
   </div>
 </template>
@@ -17,7 +17,10 @@ export default {
     return {
       data: {
         email: '',
-        password: '',
+        password: {
+          password: '',
+          confirmation: ''
+        },
         error: ''
       }
     }
@@ -27,6 +30,6 @@ export default {
 
 <style scoped>
 .auth-container {
-    margin: 0px;
+  margin: 0px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-container bg-red-pastel h-screen w-screen flex justify-center items-center">
+  <div class="auth-container sm:bg-red-pastel h-screen w-screen sm:flex justify-center items-center flex-none">
     <FormAuthentication />
   </div>
 </template>
@@ -27,6 +27,6 @@ export default {
 
 <style scoped>
 .auth-container {
-    margin: 0px;
+  margin: 0px;
 }
 </style>
