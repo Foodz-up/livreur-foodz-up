@@ -1,17 +1,12 @@
 <template>
   <div>
-    <Sidebar />
     <Nuxt class="my-10 mx-4 custom-layout-height" />
-    <Footer />
   </div>
 </template>
 
 <script>
-import Sidebar from '~/components/Navigation/Sidebar.vue'
-import Footer from '~/components/Navigation/Footer.vue'
-
 export default {
-  components: { Sidebar, Footer }
+
 }
 </script>
 

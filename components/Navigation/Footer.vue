@@ -1,8 +1,8 @@
 <template>
-  <div class="relative bg-white">
+  <footer class="relative bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex justify-between items-center border-t-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-        <div class="flex flex-col sm:flex-row items-center justify-between lg:w-0 lg:flex-1">
+      <div class="flex justify-between items-center py-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between w-full">
           <div class="flex">
             <a href="#">
               <img
@@ -16,7 +16,7 @@
             <nuxt-link to="politique" class="mx-4 text-base font-medium text-gray-500 hover:text-gray-900">
               Politique de confidentialité
             </nuxt-link>
-            <nuxt-link to="Conditions" class="mx-4 text-base font-medium text-gray-500 hover:text-gray-900">
+            <nuxt-link to="conditions" class="mx-4 text-base font-medium text-gray-500 hover:text-gray-900">
               Conditions
             </nuxt-link>
           </div>
@@ -26,7 +26,7 @@
               focusable="false"
               data-prefix="fab"
               data-icon="facebook-square"
-              class="mx-2 w-8 text-primary"
+              class="mx-2 w-6 text-primary"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -36,7 +36,7 @@
               focusable="false"
               data-prefix="fab"
               data-icon="twitter"
-              class="mx-2 w-8 text-primary"
+              class="mx-2 w-6 text-primary"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -46,7 +46,7 @@
               focusable="false"
               data-prefix="fab"
               data-icon="instagram"
-              class="mx-2 w-8 text-primary"
+              class="mx-2 w-6 text-primary"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script lang="ts">

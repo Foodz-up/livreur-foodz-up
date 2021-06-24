@@ -1,21 +1,21 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div class="sticky top-0 left-0 bg-white">
+  <div class="z-50 sticky top-0 left-0 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-        <div class="flex items-center justify-start lg:w-0 lg:flex-1">
-          <a href="#">
+      <div class="flex justify-between items-center py-6">
+        <nuxt-link to="/" class="flex items-center">
+          <div href="#">
             <span class="sr-only">Workflow</span>
             <img
               class="h-8 w-auto sm:h-10"
               src="~/assets/Logo.png"
               alt=""
             >
-          </a>
-          <a class="font-bold text-primary text-2xl mx-2">
+          </div>
+          <div class="font-bold text-primary text-2xl mx-2">
             Foodz-up
-          </a>
-        </div>
+          </div>
+        </nuxt-link>
         <div class="-mr-2 -my-2 md:hidden">
           <button type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none" aria-expanded="false" @click="phoneMenuToggle()">
             <span class="sr-only">Open menu</span>
@@ -66,8 +66,8 @@
             </div>
           </div>
         </nav>
-        <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-          <nuxt-link to="profile">
+        <div class="hidden md:flex items-center">
+          <nuxt-link to="/profil">
             <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
           </nuxt-link>
         </div>
@@ -113,14 +113,14 @@
         </div>
         <div class="py-6 px-5 space-y-6">
           <div>
-            <a href="#" class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary hover:bg-primary-80">
-              Sign up
-            </a>
+            <nuxt-link to="/auth/enregistrement" href="#" class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary hover:bg-primary-80">
+              S'inscrire
+            </nuxt-link>
             <p class="mt-6 text-center text-base font-medium text-gray-500">
-              Existing customer?
-              <a href="#" class="text-primary hover:text-primary-80">
-                Sign in
-              </a>
+              Déjà membre ?
+              <nuxt-link to="/auth/connexion" class="text-primary hover:text-primary-80">
+                Se connecter
+              </nuxt-link>
             </p>
           </div>
         </div>

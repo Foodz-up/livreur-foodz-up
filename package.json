@@ -16,6 +16,9 @@
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3",
+    "nuxt-property-decorator": "^2.9.1",
+    "vue-clipboard2": "^0.3.1",
+    "vue-social-sharing": "^3.0.8",
     "vuex-typescript": "^3.0.2"
   },
   "devDependencies": {

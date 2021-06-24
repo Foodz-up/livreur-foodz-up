@@ -1,17 +1,22 @@
 <template>
   <div>
-    <Sidebar />
-    <Nuxt class="my-10 mx-4 custom-layout-height" />
-    <Footer />
+    <div class="mx-6 my-10 custom-layout-height flex justify-center flex-col">
+      <h1 class="font-semibold text-7xl text-medium">
+        Erreur 404
+      </h1>
+      <span class="text-5xl my-3">
+        Nous n'avons pas trouvé la page recherchée
+      </span>
+      <span class="text-xl italic">
+        (Sinon je vends ma PS1 avec 21 jeux)
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
-import Sidebar from '~/components/Navigation/Sidebar.vue'
-import Footer from '~/components/Navigation/Footer.vue'
 
 export default {
-  components: { Sidebar, Footer }
 }
 </script>
 
