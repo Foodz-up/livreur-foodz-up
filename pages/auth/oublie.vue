@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-container sm:bg-red-pastel w-screen sm:flex justify-center items-center flex-none">
+  <div class="auth-container sm:bg-white h-screen w-screen sm:flex justify-center items-center flex-none">
     <FormForgotPassword />
   </div>
 </template>
@@ -26,5 +26,14 @@ export default {
 <style scoped>
 .auth-container {
   margin: 0px;
+  background: url('~/assets/img/background.jpg') center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 640px) {
+  .auth-container {
+    background: white;
+  }
 }
 </style>

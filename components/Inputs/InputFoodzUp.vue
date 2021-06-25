@@ -33,6 +33,9 @@ export default class InputFoodzUp extends Vue {
   @Prop()
   icon!: string
 
+  @Prop({ default: 'text' })
+  type!: string
+
   @Prop({ default: '25' })
   width!: string
 
@@ -50,9 +53,6 @@ export default class InputFoodzUp extends Vue {
 
   @Prop({ required: true })
   placeholder!: string
-
-  @Prop()
-  type!: string
 }
 </script>
 

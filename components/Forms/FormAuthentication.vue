@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 bg-white rounded sm:flex-none flex flex-col items-center">
+  <div class="p-5 bg-white sm:rounded sm:flex-none flex flex-col items-center">
     <h1 class="title text-center p-3 text-xl">
       Connexion
     </h1>
@@ -12,6 +12,7 @@
         :icon="'envelope'"
         :placeholder="'Ex: prenom@domaine.fr'"
         :width="20"
+        :type="email"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
@@ -22,6 +23,7 @@
         :icon="'lock'"
         :placeholder="'Ex: ••••••••'"
         :width="20"
+        :type="password"
         class="mb-3 text-sm"
       />
       <p v-if="errorMessage.length" class="text-red-700">

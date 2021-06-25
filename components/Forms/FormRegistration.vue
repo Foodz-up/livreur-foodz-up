@@ -12,6 +12,7 @@
         :icon="'profile'"
         :placeholder="'Marcel'"
         :width="20"
+        :type="text"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
@@ -22,6 +23,7 @@
         :icon="'profile'"
         :placeholder="'Dupuit'"
         :width="20"
+        :type="text"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
@@ -32,6 +34,7 @@
         :icon="'envelope'"
         :placeholder="'Ex: prenom@domaine.fr'"
         :width="20"
+        :type="email"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
@@ -42,6 +45,7 @@
         :icon="'lock'"
         :placeholder="'Ex: ••••••••'"
         :width="20"
+        :type="password"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
@@ -52,6 +56,7 @@
         :icon="'lock'"
         :placeholder="'Ex: ••••••••'"
         :width="20"
+        :type="password"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
@@ -62,6 +67,7 @@
         :icon="'number'"
         :placeholder="'62000'"
         :width="20"
+        :type="text"
         class="mb-3 text-sm"
       />
       <p v-if="errorMessage.length" class="text-red-700">

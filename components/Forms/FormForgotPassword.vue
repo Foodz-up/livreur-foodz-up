@@ -12,6 +12,7 @@
         :icon="'envelope'"
         :placeholder="'Ex: prenom@domaine.fr'"
         :width="20"
+        :type="email"
         class="mb-3 text-sm"
       />
       <p v-if="successMessage.length" class="text-green-700">
