@@ -4,38 +4,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import FormAuthentication from '~/components/Forms/FormAuthentication.vue'
 
 export default {
-  auth: false,
-  components: {
-    FormAuthentication
-  },
-  layout: 'noSidebar',
-  data () {
-    return {
-      data: {
-        email: '',
-        password: '',
-        error: ''
-      }
-    }
-  }
+  components: { FormAuthentication },
+  layout: 'noSidebar'
 }
 </script>
-
-<style scoped>
-.auth-container {
-  margin: 0px;
-  background: url('~/assets/img/background.jpg') center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-@media (max-width: 640px) {
-  .auth-container {
-    background: white;
-  }
-}
-</style>

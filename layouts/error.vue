@@ -11,12 +11,21 @@
         (Sinon je vends ma PS1 avec 21 jeux)
       </span>
     </div>
+    <ListNotifications class="fixed bottom-0 right-0 z-40" />
   </div>
 </template>
 
 <script>
+import ListNotifications from '~/components/Lists/ListNotifications.vue'
+import AuthStore from '~/store/auth'
 
 export default {
+  components: { ListNotifications },
+  mounted () {
+    if (this.$auth.$state['access_token.local']) {
+      AuthStore.setBearer(this.$auth.$state['access_token.local'].split('Bearer ')[1])
+    }
+  }
 }
 </script>
 

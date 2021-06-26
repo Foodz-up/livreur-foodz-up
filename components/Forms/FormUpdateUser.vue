@@ -1,73 +1,124 @@
 <template>
-  <form @submit.prevent="updateUser()">
-    <InputFoodzUp
-      v-model="user.name"
-      :value="user.name"
-      :input-variable="'name'"
-      :variable-description="'Prénom'"
-      :icon="'profile'"
-      :placeholder="'Ex: Thomas'"
-    />
-    <InputFoodzUp
-      v-model="user.surname"
-      class="mt-6"
-      :value="user.surname"
-      :input-variable="'surname'"
-      :variable-description="'Nom'"
-      :icon="'profile'"
-      :placeholder="'Ex: CLEMENT'"
-    />
-    <InputFoodzUp
-      v-model="user.email"
-      class="mt-6"
-      :value="user.email"
-      :input-variable="'email'"
-      :variable-description="'Email'"
-      :icon="'envelope'"
-      :placeholder="'Ex: thomas.clement@viacesi.fr'"
-    />
-    <InputFoodzUp
-      v-model="user.countryCode"
-      class="mt-6"
-      :value="user.countryCode"
-      :input-variable="'countryCode'"
-      :variable-description="'Code Postal'"
-      :icon="'number'"
-      :placeholder="'Ex: 62000'"
-    />
-    <InputFoodzUp
-      v-model="password"
-      :value="password"
-      :input-variable="'password'"
-      :variable-description="'Mot de passe pour confirmer'"
-      :icon="'lock'"
-      :placeholder="'Ex: ••••••••'"
-      :width="20"
-      class="mt-6"
-    />
-    <ButtonFoodzUp :title="'Enregistrer'" type="submit" class="mt-4 bg-primary text-white hover:bg-primary-80" />
-    <nuxt-link class="text-gray-500 hover:underline w-full ml-2" to="/auth/oublie">
-      Mot de passe oublié ?
-    </nuxt-link>
-  </form>
+  <div>
+    <form @submit.prevent="updateUser()">
+      <InputFoodzUp
+        v-model="user.firstName"
+        :value="user.firstName"
+        :input-variable="'firstName'"
+        :variable-description="'Prénom'"
+        :icon="'profile'"
+        :placeholder="'Ex: Thomas'"
+      />
+      <InputFoodzUp
+        v-model="user.lastName"
+        class="mt-6"
+        :value="user.lastName"
+        :input-variable="'lastName'"
+        :variable-description="'Nom'"
+        :icon="'profile'"
+        :placeholder="'Ex: CLEMENT'"
+      />
+      <InputFoodzUp
+        v-model="user.email"
+        class="mt-6"
+        :value="user.email"
+        :input-variable="'email'"
+        :variable-description="'Email'"
+        :icon="'envelope'"
+        :placeholder="'Ex: thomas.clement@viacesi.fr'"
+      />
+      <InputFoodzUp
+        v-model="user.cityCode"
+        class="mt-6"
+        :value="user.cityCode"
+        :input-variable="'cityCode'"
+        :variable-description="'Code Postal'"
+        :icon="'number'"
+        :placeholder="'Ex: 62000'"
+      />
+      <InputFoodzUp
+        v-model="password"
+        :type="'password'"
+        :value="password"
+        :input-variable="'password'"
+        :variable-description="'Mot de passe pour confirmer'"
+        :icon="'lock'"
+        :placeholder="'Ex: ••••••••'"
+        :width="20"
+        class="mt-6"
+      />
+      <div>
+        <ButtonFoodzUp :title="'Enregistrer'" type="submit" class="mt-4 bg-primary text-white hover:bg-primary-80" />
+        <nuxt-link class="text-gray-500 hover:underline w-full ml-2" to="/auth/oublie">
+          Mot de passe oublié ?
+        </nuxt-link>
+      </div>
+    </form>
+    <div @click="toggleModal()">
+      <ButtonSimpleText class="mt-6">
+        Supprimer votre compte
+      </ButtonSimpleText>
+    </div>
+    <Modal v-if="modalOpen" :save-button="false" @remove="deleteAccount()" @cancel="toggleModal()">
+      <p class="font-medium text-xl">
+        Etes vous sur de réaliser cette action ?
+      </p>
+      <span>Elle sera définitive, il n'y aura pas de retour en arrière.</span>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import InputFoodzUp from '~/components/Inputs/InputFoodzUp.vue'
+import Modal from '~/components/Others/Modal.vue'
+import AuthStore from '~/store/auth'
+import NotificationStore from '~/store/notification'
+import { IUser } from '~/store/interfaces'
 
 @Component({
-  components: { InputFoodzUp }
+  components: { Modal }
 })
 export default class FormUpdateUser extends Vue {
     @Prop({ required: true })
-    user!: { name: string, surname: string, email: string, countryCode: string }
+    user!: IUser
 
     password: string = ''
 
-    // TODO: Update user
-    updateUser () {
-      console.log(this.user)
+    modalOpen: boolean = false;
+
+    toggleModal () {
+      this.modalOpen = !this.modalOpen
+    }
+
+    async updateUser () {
+      try {
+        const res = await AuthStore.updateUser(this.user, this.password)
+        NotificationStore.addNotification({
+          message: res.data.message,
+          status: res.status
+        })
+      } catch (error) {
+        NotificationStore.addNotification({
+          message: error.response.data.message,
+          status: error.response.status
+        })
+      }
+    }
+
+    async deleteAccount () {
+      try {
+        const res = await AuthStore.deleteUser()
+        NotificationStore.addNotification({
+          message: res.data.message,
+          status: res.status
+        })
+        this.$router.push('/auth/deconnexion')
+      } catch (error) {
+        NotificationStore.addNotification({
+          message: error.response.data.message,
+          status: error.response.status
+        })
+      }
     }
 }
 </script>

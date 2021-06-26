@@ -22,13 +22,11 @@
     </div>
 
     <div class="mt-7">
-      <nuxt-link class="text-gray-500 hover:underline w-full mr-2" to="/about">
+      <nuxt-link class="text-gray-500 hover:underline w-full mr-2" to="/informations">
         A propos de FoodzUp
       </nuxt-link>
 
-      <button class="w-auto cursor-pointer text-red-pastel hover:underline font-medium" @click="logout()">
-        Se déconnecter
-      </button>
+      <ButtonLogOut />
     </div>
   </div>
 </template>

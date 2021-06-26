@@ -1,25 +1,25 @@
 import { AuthStoreState } from '~/store/auth/state'
-import { IUser } from '~/store/interfaces/user'
+import { IToken, IUser } from '~/store/interfaces/user'
 
 export const AuthStoreModule = {
   namespaced: false,
   state: () => ({ ...new AuthStoreState() }),
   getters: {
-    user (state: AuthStoreState): any {
+    user (state: AuthStoreState): IUser | null {
       return state.user
     },
-    token (state: AuthStoreState): any {
+    token (state: AuthStoreState): IToken | null {
       return state.token
     }
   },
   mutations: {
-    setUser (state: AuthStoreState, user: any) {
+    setUser (state: AuthStoreState, user: IUser | null) {
       state.user = user
     },
-    setToken (state: AuthStoreState, token: any) {
+    setToken (state: AuthStoreState, token: IToken | null) {
       state.token = token
     },
-    updateUser (state: AuthStoreState, user: IUser) {
+    updateUser (state: AuthStoreState, user: any) {
       state.user = {
         ...state.user,
         ...user

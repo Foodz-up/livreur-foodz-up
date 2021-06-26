@@ -19,7 +19,10 @@ module.exports = {
         'red-pastel-80': 'rgba(229, 99, 99, 0.8)',
         'yellow-pastel': 'rgba(203, 195, 121, 1)',
         'yellow-pastel-15': 'rgba(203, 195, 121, 0.15)',
-        'yellow-pastel-80': 'rgba(203, 195, 121, 0.8)'
+        'yellow-pastel-80': 'rgba(203, 195, 121, 0.8)',
+        'green-pastel': 'rgba(113, 195, 110, 1)',
+        'green-pastel-15': 'rgba(113, 195, 110, 0.15)',
+        'green-pastel-80': 'rgba(113, 195, 110, 0.80)'
       }
     },
     variants: {

@@ -1,5 +1,5 @@
-import { IUser } from '~/store/interfaces/user'
+import { IUser, IToken } from '~/store/interfaces/user'
 export class AuthStoreState {
   user: IUser | null = null
-  token: any | null = null
+  token: IToken | null = null
 }

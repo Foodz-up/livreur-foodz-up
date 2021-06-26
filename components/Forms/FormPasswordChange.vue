@@ -2,6 +2,7 @@
   <form @submit.prevent="updatePassword()">
     <InputFoodzUp
       v-model="password.oldPassword"
+      :type="`password`"
       :value="password.oldPassword"
       :input-variable="'oldPassword'"
       :variable-description="'Ancien mot de passe'"
@@ -11,6 +12,7 @@
     />
     <InputFoodzUp
       v-model="password.newPassword"
+      :type="`password`"
       class="mt-6"
       :value="password.newPassword"
       :input-variable="'newPassword'"
@@ -21,6 +23,7 @@
     />
     <InputFoodzUp
       v-model="password.confirmPassword"
+      :type="`password`"
       class="mt-6"
       :value="password.confirmPassword"
       :input-variable="'confirmPassword'"
@@ -42,10 +45,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import InputFoodzUp from '~/components/Inputs/InputFoodzUp.vue'
+import AuthStore from '~/store/auth'
+import NotificationStore from '~/store/notification'
 
 @Component({
-  components: { InputFoodzUp }
 })
 export default class FormPasswordChange extends Vue {
   @Prop({ required: true })
@@ -56,8 +59,19 @@ export default class FormPasswordChange extends Vue {
   };
 
   // TODO: Update password
-  updatePassword () {
-    console.log(this.password)
+  async updatePassword () {
+    try {
+      const res = await AuthStore.changePassword(this.password)
+      NotificationStore.addNotification({
+        message: res.data.message,
+        status: res.status
+      })
+    } catch (error) {
+      NotificationStore.addNotification({
+        message: error.response.data.message,
+        status: error.response.status
+      })
+    }
   }
 }
 </script>

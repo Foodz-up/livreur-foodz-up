@@ -38,7 +38,7 @@
             {{ parseFloat(commande.price*0.1).toFixed(2) }}€
           </p>
         </div>
-        <div class="grid gap-5 grid-cols-2 border-t-2">
+        <div class="pt-2 grid gap-5 grid-cols-2 border-t-2">
           <p class="text-sm">
             Total rémunération
           </p>

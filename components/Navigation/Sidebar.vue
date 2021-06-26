@@ -1,9 +1,9 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div class="z-50 sticky top-0 left-0 bg-gray-50">
+  <div class="bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center py-6">
-        <nuxt-link to="/" class="flex items-center">
+        <nuxt-link to="/commandes" class="flex items-center">
           <div href="#">
             <span class="sr-only">Workflow</span>
             <img
@@ -14,6 +14,9 @@
           </div>
           <div class="font-bold text-primary text-2xl mx-2">
             Foodz-up
+          </div>
+          <div v-if="isConnected">
+            {{ $auth.user.id }}
           </div>
         </nuxt-link>
         <div class="-mr-2 -my-2 md:hidden">
@@ -45,16 +48,18 @@
                 <div :class="{ hidden: !menu }" class="absolute z-10 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
                   <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                      <nuxt-link v-for="(link, index2) in navigation.links" :key="index2" class="flex items-center" :to="link.to">
-                        <DynamicSvg :width="30" class="text-primary" :component-name="link.logo" />
-                        <div class="ml-4">
-                          <p class="text-base font-medium text-gray-900">
-                            {{ link.title }}
-                          </p>
-                          <p class="mt-1 text-sm text-gray-500">
-                            {{ link.description }}
-                          </p>
-                        </div>
+                      <nuxt-link v-for="(link, index2) in navigation.links" :key="index2" :to="link.to">
+                        <button class="flex items-center" @click="menuToggle()">
+                          <DynamicSvg :width="30" class="text-primary" :component-name="link.logo" />
+                          <div class="ml-6 text-left">
+                            <p class="text-base font-medium text-gray-900">
+                              {{ link.title }}
+                            </p>
+                            <p class="mt-1 text-sm text-gray-500">
+                              {{ link.description }}
+                            </p>
+                          </div>
+                        </button>
                       </nuxt-link>
                     </div>
                   </div>
@@ -67,8 +72,14 @@
           </div>
         </nav>
         <div class="hidden md:flex items-center">
-          <nuxt-link to="/profil">
-            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+          <nuxt-link v-if="isConnected" to="/profil">
+            <!-- <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> -->
+            <div>
+              <DynamicSvg width="30" class="text-primary" :component-name="'profile'" />
+            </div>
+          </nuxt-link>
+          <nuxt-link v-else to="/auth/connexion" class="font-medium text-gray-400 hover:text-gray-700">
+            Se connecter
           </nuxt-link>
         </div>
       </div>
@@ -132,6 +143,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import DynamicSvg from '~/components/Svg/DynamicSvg.vue'
+import AuthStore from '~/store/auth'
 
 @Component({
   components: {
@@ -153,6 +165,10 @@ export default class Sidebar extends Vue {
 
       phoneMenuToggle () {
         this.phoneMenu = !this.phoneMenu
+      }
+
+      get isConnected ():boolean {
+        return AuthStore.user !== null
       }
 }
 </script>

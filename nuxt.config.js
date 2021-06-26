@@ -16,8 +16,14 @@ export default {
   css: [
   ],
 
+  router: {
+    middleware: ['auth']
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/foodz-components',
+    '~/plugins/axios'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -35,17 +41,70 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    // '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    'nuxt-gmaps'
+    // ['nuxt-gmaps', {
+    //   // key: 'AIzaSyBm4if1IL8tOmj6lBtHhe9BtSMdehjIytk'
+    // }]
   ],
 
+  compilerOptions: {
+    types: [
+      '@nuxtjs/auth-next',
+      '@nuxtjs/axios'
+    ]
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8000/'
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
       lang: 'en'
+    }
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        scheme: 'refresh',
+        localStorage: {
+          prefix: 'auth.'
+        },
+        token: {
+          prefix: 'access_token.',
+          property: 'access_token',
+          maxAge: 86400,
+          type: 'Bearer'
+        },
+        refreshTpken: {
+          prefix: 'refresh_token.',
+          property: 'refresh_token',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 15
+        },
+        user: {
+          property: 'user',
+          autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/auth/login', method: 'post', propertyName: 'data.token' },
+          refresh: { url: '/auth/refreshtoken', method: 'post' },
+          user: { url: '/auth/me', method: 'get', propertyName: 'data' },
+          logout: false
+        }
+      }
+    },
+    redirect: {
+      login: '/auth/connexion',
+      logout: '/auth/deconnexion',
+      home: '/'
     }
   },
 

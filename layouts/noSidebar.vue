@@ -1,19 +1,40 @@
 <template>
   <div>
     <Nuxt class="my-10 mx-4 custom-layout-height" />
+    <ListNotifications class="fixed bottom-0 right-0 z-40" />
   </div>
 </template>
 
 <script>
-export default {
+import ListNotifications from '~/components/Lists/ListNotifications.vue'
+import AuthStore from '~/store/auth'
 
+export default {
+  components: { ListNotifications },
+  mounted () {
+    if (this.$auth.$state['access_token.local']) {
+      AuthStore.setBearer(this.$auth.$state['access_token.local'].split('Bearer ')[1])
+    }
+  }
 }
 </script>
 
-<style>
-.custom-layout-height{
-  min-height: calc(100vh - 260px)
+<style scoped>
+.auth-container {
+  margin: 0px;
+  background: url('~/assets/img/background.jpg') center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+
+@media (max-width: 640px) {
+  .auth-container {
+    background: white;
+  }
+}
+</style>
+
+<style>
 
 html {
   font-family:

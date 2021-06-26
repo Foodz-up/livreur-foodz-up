@@ -1,17 +1,25 @@
 <template>
   <div>
-    <Sidebar />
-    <Nuxt class="my-10 mx-4 custom-layout-height" />
+    <Sidebar class="z-30 sticky top-0 left-0" />
+    <Nuxt class="my-10 custom-layout-height mx-4" />
     <Footer />
+    <ListNotifications class="fixed bottom-0 right-0 z-40" />
   </div>
 </template>
 
 <script>
 import Sidebar from '~/components/Navigation/Sidebar.vue'
 import Footer from '~/components/Navigation/Footer.vue'
+import ListNotifications from '~/components/Lists/ListNotifications.vue'
+import AuthStore from '~/store/auth'
 
 export default {
-  components: { Sidebar, Footer }
+  components: { Sidebar, Footer, ListNotifications },
+  mounted () {
+    if (this.$auth.$state['access_token.local']) {
+      AuthStore.setBearer(this.$auth.$state['access_token.local'].split('Bearer ')[1])
+    }
+  }
 }
 </script>
 

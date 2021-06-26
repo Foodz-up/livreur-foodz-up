@@ -1,134 +1,118 @@
 <template>
-  <div class="p-5 bg-white rounded sm:flex-none flex flex-col items-center">
+  <div class="p-5 bg-white rounded-xl sm:flex-none flex flex-col items-center">
     <h1 class="title text-center p-3 text-xl">
       Création de compte
     </h1>
     <form class="w-96" method="post" @submit.prevent="register">
       <InputFoodzUp
-        v-model="firstName"
-        :value="firstName"
+        v-model="data.firstName"
         :input-variable="'firstName'"
         :variable-description="'Prénom'"
         :icon="'profile'"
         :placeholder="'Marcel'"
         :width="20"
-        :type="text"
+        :type="'text'"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
-        v-model="lastName"
-        :value="lastName"
+        v-model="data.lastName"
         :input-variable="'lastName'"
         :variable-description="'Nom'"
         :icon="'profile'"
-        :placeholder="'Dupuit'"
+        :placeholder="'Dupont'"
         :width="20"
-        :type="text"
+        :type="'text'"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
-        v-model="email"
-        :value="email"
+        v-model="data.email"
         :input-variable="'email'"
         :variable-description="'Adresse mail'"
         :icon="'envelope'"
         :placeholder="'Ex: prenom@domaine.fr'"
         :width="20"
-        :type="email"
+        :type="'email'"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
-        v-model="password"
-        :value="password"
+        v-model="data.password"
         :input-variable="'password.password'"
         :variable-description="'Mot de passe'"
         :icon="'lock'"
         :placeholder="'Ex: ••••••••'"
         :width="20"
-        :type="password"
+        :type="'password'"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
-        v-model="password"
-        :value="confirmation"
+        v-model="data.confirmPassword"
         :input-variable="'password.confirmation'"
         :variable-description="'Confirmer mot de passe'"
         :icon="'lock'"
         :placeholder="'Ex: ••••••••'"
         :width="20"
-        :type="password"
+        :type="'password'"
         class="mb-3 text-sm"
       />
       <InputFoodzUp
-        v-model="cityCode"
-        :value="cityCode"
+        v-model="data.cityCode"
         :input-variable="'cityCode'"
         :variable-description="'Code postal'"
         :icon="'number'"
         :placeholder="'62000'"
         :width="20"
-        :type="text"
+        :type="'text'"
         class="mb-3 text-sm"
       />
-      <p v-if="errorMessage.length" class="text-red-700">
-        {{ errorMessage }}
-      </p>
-      <div class="text-center">
+
+      <div class="text-center flex flex-col">
         <ButtonFoodzUp :title="'Valider'" type="submit" class="mt-4 bg-primary text-white hover:bg-primary-80 mb-3" />
-        <div class="text-sm">
-          <nuxt-link class="text-gray-500 hover:underline w-full ml-2" to="/auth/connexion">
-            J'ai déjà un compte Foodzup
-          </nuxt-link>
-        </div>
+        <nuxt-link class="text-gray-500 hover:underline w-full mt-2" to="/auth/oublie">
+          Mot de passe oublié ?
+        </nuxt-link>
+        <nuxt-link class="text-gray-500 text-center hover:underline w-full mt-2" to="/auth/connexion">
+          J'ai déjà un compte Foodz'Up
+        </nuxt-link>
       </div>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import InputFoodzUp from '~/components/Inputs/InputFoodzUp.vue'
-import ButtonFoodzUp from '~/components/Buttons/ButtonFoodzUp.vue'
+import AuthStore from '~/store/auth'
+import NotificationStore from '~/store/notification'
 
-    @Component({
-      components: { InputFoodzUp, ButtonFoodzUp }
-    })
-export default class FormRegistration extends Vue {
-    @Prop()
-    firstName!: string;
-
-    @Prop()
-    lastName!: string;
-
-    @Prop()
-    email!: string;
-
-    @Prop()
-    password!: {
-        password: string,
-        confirmation: string
-    }
-
-    @Prop()
-    cityCode!: string;
-
-    @Prop()
-    errorMessage: string = '';
-
-    register = () => {
-      if (this.password.password.length && this.password.password !== this.password.confirmation) {
-        this.errorMessage = 'Les mots de passes saisis sont différents'
-        return
+export default {
+  data () {
+    return {
+      data: {
+        email: 'test@gmail.com',
+        password: 'test',
+        confirmPassword: 'test',
+        firstName: 'Thomas',
+        lastName: 'CLEMENT',
+        cityCode: 62000
       }
-      const user = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password.password,
-        cityCode: this.cityCode
-      }
-      alert(user)
     }
+  },
+
+  methods: {
+    async register () {
+      try {
+        const response = await AuthStore.register(this.data)
+        NotificationStore.addNotification({
+          message: response.data.message,
+          status: response.status
+        })
+        this.$router.push('/auth/connexion')
+      } catch (error) {
+        NotificationStore.addNotification({
+          message: error.response.data.message,
+          status: error.response.status
+        })
+      }
+    }
+  }
 }
 </script>
 

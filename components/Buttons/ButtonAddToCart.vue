@@ -38,6 +38,6 @@ export default class ButtonAddToCart extends Vue {
 
 <style scoped>
 .btn-custom:active {
-    /* @apply bg-red-pastel; */
+    @apply bg-red-pastel;
 }
 </style>

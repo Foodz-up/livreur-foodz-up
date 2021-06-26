@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
 import { AuthStoreModule } from '~/store/auth/module'
+import { NotificationStoreModule } from '~/store/notification/module'
 import { RootState } from '~/store/root'
 
 Vue.use(Vuex)
@@ -14,7 +15,8 @@ const store: Store<RootState> = new Vuex.Store<RootState>({
     async nuxtClientInit () {}
   },
   modules: {
-    auth: AuthStoreModule
+    auth: AuthStoreModule,
+    notification: NotificationStoreModule
   }
 })
 export default function () {

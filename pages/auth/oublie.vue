@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import FormForgotPassword from '~/components/Forms/FormForgotPassword.vue'
 
 export default {
@@ -12,28 +12,6 @@ export default {
   components: {
     FormForgotPassword
   },
-  layout: 'noSidebar',
-  data () {
-    return {
-      data: {
-        email: ''
-      }
-    }
-  }
+  layout: 'noSidebar'
 }
 </script>
-
-<style scoped>
-.auth-container {
-  margin: 0px;
-  background: url('~/assets/img/background.jpg') center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-@media (max-width: 640px) {
-  .auth-container {
-    background: white;
-  }
-}
-</style>
