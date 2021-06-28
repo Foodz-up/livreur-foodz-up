@@ -3,7 +3,7 @@
   <div class="bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center py-6">
-        <nuxt-link to="/commandes" class="flex items-center">
+        <nuxt-link to="/" class="flex items-center">
           <div href="#">
             <span class="sr-only">Workflow</span>
             <img
@@ -72,12 +72,31 @@
           </div>
         </nav>
         <div class="hidden md:flex items-center">
-          <nuxt-link v-if="isConnected" to="/profil">
-            <!-- <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> -->
-            <div>
-              <DynamicSvg width="30" class="text-primary" :component-name="'profile'" />
-            </div>
-          </nuxt-link>
+          <div v-if="isConnected" class="flex items-center">
+            <button class="relative inline-block" @mouseover="cartToggle()" @mouseleave="cartToggle()">
+              <nuxt-link to="/panier">
+                <DynamicSvg :width="20" class="text-primary px-6 py-2" :component-name="'cart'" />
+
+                <span v-if="oneItemOrMore" class="absolute top-0 right-0 inline-flex items-center justify-center p-1 text-xs font-bold leading-none text-red-100 transform -translate-x-4 -translate-y-1/4  bg-red-600 rounded-full">
+                  {{ numberItemsInCart }}
+                </span>
+              </nuxt-link>
+              <div v-if="cart && oneItemOrMore" class="w-80 bg-gray-200 absolute top-0 left-0 inline-flex px-4 py-2 text-lg font-semibold text-gray-500 transform -translate-x-72 translate-y-5 rounded-lg">
+                <ul>
+                  <li v-for="item in itemsInCart" :key="item.id" class="text-left">
+                    {{ item.item.name }} - {{ item.item.price }} €
+                  </li>
+                </ul>
+              </div>
+            </button>
+
+            <nuxt-link to="/profil">
+              <!-- <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> -->
+              <div>
+                <DynamicSvg width="30" class="text-primary" :component-name="'profile'" />
+              </div>
+            </nuxt-link>
+          </div>
           <nuxt-link v-else to="/auth/connexion" class="font-medium text-gray-400 hover:text-gray-700">
             Se connecter
           </nuxt-link>
@@ -105,21 +124,21 @@
               </button>
             </div>
           </div>
-          <div v-for="(navigation, index3) in navigations" :key="index3" class="mt-6">
+          <div v-for="(navigation, index3) in navigations" :key="index3" class="mt-6" :to="navigation.to">
             <div v-if="navigation.links">
-              <div v-for="(link, index4) in navigation.links" :key="index4" class="flex items-center mt-6">
+              <nuxt-link v-for="(link, index4) in navigation.links" :key="index4" :to="link.to" class="flex items-center mt-6">
                 <DynamicSvg :width="20" class="text-primary" :component-name="link.logo" />
                 <span class="ml-3 text-base font-medium text-gray-900">
                   {{ link.title }}
                 </span>
-              </div>
+              </nuxt-link>
             </div>
-            <div v-else class="flex items-center">
+            <nuxt-link v-else :to="navigation.to" class="flex items-center">
               <DynamicSvg :width="20" class="text-primary" :component-name="navigation.logo" />
               <span class="ml-3 text-base font-medium text-gray-900">
                 {{ navigation.title }}
               </span>
-            </div>
+            </nuxt-link>
           </div>
         </div>
         <div class="py-6 px-5 space-y-6">
@@ -151,6 +170,7 @@ import AuthStore from '~/store/auth'
   }
 })
 export default class Sidebar extends Vue {
+      cart:boolean = false
       menu: boolean = false;
       phoneMenu: boolean = false;
       navigations: Array<object> = [
@@ -161,6 +181,10 @@ export default class Sidebar extends Vue {
 
       menuToggle () {
         this.menu = !this.menu
+      }
+
+      cartToggle () {
+        this.cart = !this.cart
       }
 
       phoneMenuToggle () {

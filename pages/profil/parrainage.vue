@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mt-1 text-4xl font-medium">
+    <h1 class="text-center sm:text-left mt-1 text-4xl font-medium">
       Parrainage
     </h1>
 
@@ -22,7 +22,7 @@
       :width="20"
     />
     <div class="flex items-center ml-4 mt-2">
-      <button class="flex flex-col items-center mr-2" @click="clickWithoutCode()">
+      <button class="flex flex-col items-center mr-2" @click="clickWithoutCode(1)">
         <DynamicSvg :component-name="'share'" width="18" class="mr-2 text-blue-500" />
         <span>Partager</span>
       </button>
@@ -100,12 +100,16 @@ export default class ProfileSponsor extends Vue {
     })
   }
 
-  clickWithoutCode () {
+  clickWithoutCode (mode: number) {
     if (AuthStore.user.sponsorCode === null) {
       NotificationStore.addNotification({
         message: 'Veuillez générer un code de parrainage avant de pouvoir le copier ou le partager',
         status: 400
       })
+    }
+
+    if (mode === 1) {
+      this.modal = true
     }
   }
 
@@ -119,6 +123,8 @@ export default class ProfileSponsor extends Vue {
   async generateSponsorCode () {
     const caracToUse = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-+!*ù$'
     const code: string = Array(10).fill(caracToUse).map(function (x) { return x[Math.floor(Math.random() * x.length)] }).join('')
+
+    // TODO: store that new code in database
 
     try {
       const response = await AuthStore.generateSponsorCode(code)
