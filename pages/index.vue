@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div v-if="!orders" class="text-center">
+      <h1 class="font-thin text-xl sm:text-4xl">
+        Aucune commande a été enregistrée
+      </h1>
+    </div>
     <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 p-4">
       <CardCommande
         v-for="commande in orders"
