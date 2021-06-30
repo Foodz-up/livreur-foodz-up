@@ -37,6 +37,15 @@
         :placeholder="'Ex: 62000'"
       />
       <InputFoodzUp
+        v-model="user.address"
+        class="mt-6"
+        :value="user.address"
+        :input-variable="'address'"
+        :variable-description="'Adresse'"
+        :icon="'number'"
+        :placeholder="'Ex: 10 rue de la vacherie, 62000 Arras'"
+      />
+      <InputFoodzUp
         v-model="password"
         :type="'password'"
         :value="password"
