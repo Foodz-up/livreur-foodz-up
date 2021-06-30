@@ -2,7 +2,7 @@
   <div class="commande-card w-full flex items-center hover:bg-gray-50" @click="clicked">
     <img :src="require(`assets/img/${img}`)" class="h-32">
     <div class="p-3">
-      <h1>{{ restaurant }} ({{ address.city }})</h1>
+      <h1>{{ restaurant.name }} ({{ address }})</h1>
       <p class="font-thin text-sm">
         {{ distance }}
       </p>

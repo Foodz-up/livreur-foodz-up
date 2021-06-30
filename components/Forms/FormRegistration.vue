@@ -78,7 +78,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import AuthStore from '~/store/auth'
 import NotificationStore from '~/store/notification'
 
