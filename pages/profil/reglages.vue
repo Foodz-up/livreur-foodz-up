@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mt-1 text-4xl font-medium">
+    <h1 class="text-center sm:text-left mt-1 text-4xl font-medium">
       Informations du compte
     </h1>
     <hr class="mt-4 mb-12">

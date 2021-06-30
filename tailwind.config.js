@@ -7,10 +7,10 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     extend: {
       colors: {
-        primary: 'rgba(113, 195, 110, 1)',
-        'primary-15': 'rgba(113, 195, 110, 0.15)',
-        'primary-30': 'rgba(113, 195, 110, 0.30)',
-        'primary-80': 'rgba(113, 195, 110, 0.80)',
+        primary: 'rgba(121, 203, 202, 1)',
+        'primary-15': 'rgba(121, 203, 202, 0.15)',
+        'primary-30': 'rgba(121, 203, 202, 0.30)',
+        'primary-80': 'rgba(121, 203, 202, 0.80)',
         'blue-pastel': 'rgba(121, 203, 202, 1)',
         'blue-pastel-15': 'rgba(121, 203, 202, 0.15)',
         'blue-pastel-80': 'rgba(121, 203, 202, 0.8)',

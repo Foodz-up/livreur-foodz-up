@@ -64,6 +64,15 @@
         :type="'text'"
         class="mb-3 text-sm"
       />
+      <InputFoodzUp
+        v-model="data.address"
+        class="mt-6"
+        :value="data.address"
+        :input-variable="'address'"
+        :variable-description="'Adresse'"
+        :icon="'number'"
+        :placeholder="'Ex: 10 rue de la vacherie, 62000 Arras'"
+      />
 
       <div class="text-center flex flex-col">
         <ButtonFoodzUp :title="'Valider'" type="submit" class="mt-4 bg-primary text-white hover:bg-primary-80 mb-3" />
@@ -91,7 +100,8 @@ export default {
         confirmPassword: 'test',
         firstName: 'Thomas',
         lastName: 'CLEMENT',
-        cityCode: 62000
+        cityCode: 62000,
+        address: '7 rue Diderot, 62000 Arras'
       }
     }
   },
@@ -104,6 +114,7 @@ export default {
           message: response.data.message,
           status: response.status
         })
+
         this.$router.push('/auth/connexion')
       } catch (error) {
         NotificationStore.addNotification({

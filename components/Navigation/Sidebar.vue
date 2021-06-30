@@ -128,10 +128,7 @@
               S'inscrire
             </nuxt-link>
             <p class="mt-6 text-center text-base font-medium text-gray-500">
-              Déjà membre ?
-              <nuxt-link to="/auth/connexion" class="text-primary hover:text-primary-80">
-                Se connecter
-              </nuxt-link>
+              <ButtonLogOut />
             </p>
           </div>
         </div>
