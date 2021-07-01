@@ -3,15 +3,17 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center py-6">
         <div class="flex flex-col sm:flex-row items-center justify-between w-full">
-          <div class="flex">
-            <a href="#">
-              <img
-                class="h-8 w-auto sm:h-10"
-                src="~/assets/Logo.png"
-                alt=""
-              >
-            </a>
-          </div>
+          <nuxt-link to="/" class="flex items-center">
+            <span class="sr-only">Workflow</span>
+            <img
+              class="h-8 w-auto sm:h-10"
+              src="~/assets/Logo.png"
+              alt=""
+            >
+            <div class="font-bold text-primary text-2xl mx-2">
+              Foodz-up
+            </div>
+          </nuxt-link>
           <div class="flex my-4 sm:my-0">
             <nuxt-link to="/politique" class="mx-4 text-base font-medium text-gray-500 hover:text-gray-900">
               Politique de confidentialité
