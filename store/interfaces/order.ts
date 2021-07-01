@@ -11,6 +11,7 @@ export enum EOrderState {
 }
 
 export interface IOrder {
+    _id: string
     id: number
     price: number
     status: EOrderState
@@ -18,4 +19,5 @@ export interface IOrder {
     restaurant: IRestaurant
     client: IUser
     date: Date
+    distance: number
 }

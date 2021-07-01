@@ -1,20 +1,22 @@
 <template>
   <div>
-    <div v-if="!orders" class="text-center">
+    <div v-if="!storeOrders" class="text-center">
       <h1 class="font-thin text-xl sm:text-4xl">
         Aucune commande a été enregistrée
       </h1>
     </div>
-    <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 p-4">
+    <div v-else class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 p-4">
       <CardCommande
-        v-for="commande in orders"
-        :id="commande.id"
-        :key="commande.id"
-        :distance="commande.distance"
-        :address="10"
+        v-for="commande in storeOrders"
+        :key="commande._id"
+        :_id="commande._id"
+        :distance="10"
+        :address-out="commande.client.address"
+        :address-in="commande.restaurant.address"
         :restaurant="commande.restaurant"
+        :client="commande.client.address"
         :price="commande.price"
-        @clicked="cardClick(commande.id)"
+        @clicked="cardClick(commande._id)"
       />
     </div>
 
@@ -36,19 +38,26 @@ import AuthStore from '~/store/auth'
   components: { CardCommande, Modal }
 })
 export default class Home extends Vue {
-  allOrders: Array<IOrder> | undefined = OrderStore.getOrders()
-  orders = this.allOrders?.find(order => order.status === EOrderState.ORDERED)
+  get storeOrders ():Array<IOrder> {
+    return OrderStore.orders
+  }
 
   modalOpen = false
-  selectedKey!: number
+  selectedKey!: string
 
-  cardClick (key: number) {
+  cardClick (key: string) {
     this.modalOpen = true
     this.selectedKey = key
   }
 
-  selectCommande (id: number) {
-    if (this.allOrders) {
+  mounted () {
+    if (!(OrderStore.orders.length > 0)) {
+      OrderStore.getOrders()
+    }
+  }
+
+  selectCommande (id: string) {
+    if (this.storeOrders) {
       OrderStore.updateOrder(id, EOrderState.ORDER_IN_PROGRESS, AuthStore.user)
       this.$router.push('/livraisons/' + id)
     }

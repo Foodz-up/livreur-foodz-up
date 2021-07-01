@@ -1,37 +1,21 @@
 <template>
-  <div>
-    <h1 class="text-4xl mb-5">
-      Commandes en cours
-    </h1>
-    <div class="grid grid-cols-1">
-      <div v-for="order in currentOrders" :key="order.id" class="grid grid-cols-4 bg-gray-50 p-5 border-b-2">
-        <p>{{ order.orderNumber }}</p>
-        <p class="font-thin">
-          {{ order.restaurant.name }}
-        </p>
-        <p class="font-thin">
-          {{ Math.floor(Math.random() * 20) }}
-        </p>
-        <p class="font-thin">
-          {{ parseFloat(order.price*0.1 + Math.floor(Math.random() * 20)).toFixed(2) }}€
-        </p>
-      </div>
-    </div>
-    <h1 class="text-4xl mb-5 mt-5">
-      Commandes passées
-    </h1>
-    <div class="grid grid-cols-1">
-      <div v-for="order in passedOrders" :key="order.id" class="grid grid-cols-4 bg-gray-50 p-5 border-b-2">
-        <p>{{ order.orderNumber }}</p>
-        <p class="font-thin">
-          {{ order.restaurant }}
-        </p>
-        <p class="font-thin">
-          {{ distance = Math.floor(Math.random() * 20) }}
-        </p>
-        <p class="font-thin">
-          {{ parseFloat(order.price*0.1 + Math.floor(Math.random() * 20)).toFixed(2) }}€
-        </p>
+  <div v-if="storeOrdersMe">
+    <div v-for="(orderArrayByStatus, index) in splitedByStatus" :key="index" class="w-full mb-4">
+      <h1 class="text-4xl mb-5">
+        {{ orderArrayByStatus[0].status }}
+      </h1>
+      <div v-if="storeOrdersMe" class="grid grid-cols-1">
+        <nuxt-link v-for="order in orderArrayByStatus" :key="order._id" :to="`/livraisons/${order._id}`" class="grid grid-cols-3 gap-5 text-center bg-gray-50 p-5 border-b-2">
+          <p class="font-thin my-auto">
+            {{ order.restaurant.name }}
+          </p>
+          <p class="font-thin my-auto">
+            {{ order.distance }} km
+          </p>
+          <p class="font-thin my-auto">
+            {{ paimentPrice(order) }} €
+          </p>
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -41,14 +25,38 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { EOrderState, IOrder } from '~/store/interfaces/order'
 import OrderStore from '~/store/order'
-import AuthStore from '~/store/auth'
 
 @Component({
 })
 export default class Historique extends Vue {
-  allOrders: Array<IOrder> | undefined = OrderStore.getOrders()
-  currentOrders = this.allOrders?.find(order => order.status !== EOrderState.PASSED && order.driver?.id === AuthStore.user.id)
-  passedOrders = this.allOrders?.find(order => order.status === EOrderState.PASSED && order.driver?.id === AuthStore.user.id)
+  get storeOrdersMe ():Array<IOrder> {
+    return OrderStore.ordersMe
+  }
+
+  paimentPrice (order: IOrder) {
+    if (!order.distance) {
+      return (order.price / 19 + 0.001 * order.price).toFixed(2)
+    }
+    return (order.price / 19 + 0.001 * order.price * order.distance).toFixed(2)
+  }
+
+  get splitedByStatus () {
+    const newObject = this.storeOrdersMe.reduce(function (obj, value) {
+      const key = value.status
+      // @ts-ignore
+      if (obj[key] == null) { obj[key] = [] }
+
+      // @ts-ignore
+      obj[key].push(value)
+      return obj
+    }, {})
+
+    return newObject
+  }
+
+  mounted () {
+    if (OrderStore.ordersMe.length === 0) { OrderStore.getOrdersMe() }
+  }
 }
 </script>
 

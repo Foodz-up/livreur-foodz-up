@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
+import { OrderStoreModule } from './order/module'
 import { AuthStoreModule } from '~/store/auth/module'
 import { NotificationStoreModule } from '~/store/notification/module'
 import { RootState } from '~/store/root'
@@ -16,7 +17,8 @@ const store: Store<RootState> = new Vuex.Store<RootState>({
   },
   modules: {
     auth: AuthStoreModule,
-    notification: NotificationStoreModule
+    notification: NotificationStoreModule,
+    order: OrderStoreModule
   }
 })
 export default function () {

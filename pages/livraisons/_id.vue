@@ -1,89 +1,97 @@
 <template>
-  <div class="flex flex-col md:flex-row">
-    <div class="flex flex-col align-start p-6 bg-gray-50">
-      <h1 class="text-2xl border-b-2 pb-5 border-black">
-        {{ commande.restaurant.name }} ({{ commande.orderNumber }})
-      </h1>
-      <p class="text-sm font-thin mb-5">
-        Commandé à {{ commande.date }}
-      </p>
-      <div class="mb-5">
-        <h2 class="text-xl pb-3">
-          Adresse
-        </h2>
-        <p class="text-sm font-thin">
-          {{ commande.address }}
+  <div>
+    <LoadStatusOrder :key="updateComponent" :status="status" class="mb-8" @changeStatus="changeStatus" />
+    <div class="flex flex-col md:flex-row">
+      <div class="flex flex-col align-start p-6 bg-gray-50">
+        <h1 class="text-2xl border-b-2 pb-5 border-black">
+          {{ storeOrder.restaurant.name }} ({{ storeOrder._id }})
+        </h1>
+        <p class="text-sm font-thin mb-5">
+          Commandé le {{ dateFormat(storeOrder.date) }}
         </p>
+        <div class="mb-5">
+          <h2 class="text-xl pb-3">
+            Adresse
+          </h2>
+          <p class="font-thin text-sm">
+            <span class="font-medium">Position commande :</span> {{ storeOrder.restaurant.address }}
+          </p>
+          <p class="font-thin text-sm">
+            <span class="font-medium">Livrer au :</span> {{ storeOrder.client.address }}
+          </p>
+        </div>
+        <h2 class="text-xl pb-3">
+          Elements de rémunération
+        </h2>
+        <div class="grid gap-4 grid-cols-1">
+          <div class="grid gap-5 grid-cols-2">
+            <p class="text-sm">
+              Distance à parcourir
+            </p>
+            <p class="text-sm font-thin">
+              {{ storeOrder.distance }}km
+            </p>
+          </div>
+          <div class="pt-2 grid gap-5 grid-cols-2 border-t-2">
+            <p class="text-sm">
+              Total rémunération
+            </p>
+            <p class="text-sm font-thin">
+              {{ paimentPrice }}€
+            </p>
+          </div>
+        </div>
       </div>
-      <h2 class="text-xl pb-3">
-        Rémunération
-      </h2>
-      <div class="grid gap-4 grid-cols-1">
-        <div class="grid gap-5 grid-cols-2">
-          <p class="text-sm">
-            Distance à parcourir
-          </p>
-          <p class="text-sm font-thin">
-            {{ distance }}km
-          </p>
-        </div>
-        <div class="grid gap-5 grid-cols-2">
-          <p class="text-sm">
-            Part sur la commande
-          </p>
-          <p class="text-sm font-thin">
-            {{ parseFloat(commande.price*0.1).toFixed(2) }}€
-          </p>
-        </div>
-        <div class="pt-2 grid gap-5 grid-cols-2 border-t-2">
-          <p class="text-sm">
-            Total rémunération
-          </p>
-          <p class="text-sm font-thin">
-            {{ totalRemuneration }}€
-          </p>
-        </div>
-      </div>
-    </div>
-    <GMap
-      ref="gMap"
-      class="self-stretch h-full w-full"
-      language="en"
-      :cluster="{options: {styles: clusterStyle}}"
-      :center="{lat: locations[0].lat, lng: locations[0].lng}"
-      :options="{fullscreenControl: false, styles: mapStyle}"
-      :zoom="6"
-    >
-      <GMapMarker
-        v-for="location in locations"
-        :key="location.id"
-        :position="{lat: location.lat, lng: location.lng}"
-        :options="{icon: location === currentLocation ? pins.selected : pins.notSelected}"
-        @click="currentLocation = location"
+      <!-- <GMap
+        ref="gMap"
+        class="self-stretch h-full w-full"
+        language="en"
+        :cluster="{options: {styles: clusterStyle}}"
+        :center="{lat: locations[0].lat, lng: locations[0].lng}"
+        :options="{fullscreenControl: false, styles: mapStyle}"
+        :zoom="6"
       >
-        <GMapInfoWindow :options="{maxWidth: 200}">
-          <code>
-            lat: {{ location.lat }},
-            lng: {{ location.lng }}
-          </code>
-        </GMapInfoWindow>
-      </GMapMarker>
-      <GMapCircle :options="circleOptions" />
-    </GMap>
+        <GMapMarker
+          v-for="location in locations"
+          :key="location.id"
+          :position="{lat: location.lat, lng: location.lng}"
+          :options="{icon: location === currentLocation ? pins.selected : pins.notSelected}"
+          @click="currentLocation = location"
+        >
+          <GMapInfoWindow :options="{maxWidth: 200}">
+            <code>
+              lat: {{ location.lat }},
+              lng: {{ location.lng }}
+            </code>
+          </GMapInfoWindow>
+        </GMapMarker>
+        <GMapCircle :options="circleOptions" />
+      </GMap> -->
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { IOrder } from '~/store/interfaces/order'
+import { EOrderState, IOrder } from '~/store/interfaces/order'
 import OrderStore from '~/store/order'
+import LoadStatusOrder from '~/components/Others/LoadStatusOrder.vue'
 
-@Component({})
+@Component({
+  components: { LoadStatusOrder }
+})
 export default class Delivery extends Vue {
-  commande: IOrder | undefined = OrderStore.getOrder(parseInt(this.$router.currentRoute.params.id))
-  distance: number = Math.floor(Math.random() * 20)
+  get storeOrder ():IOrder | undefined {
+    return OrderStore.getOrderMe(this.$router.currentRoute.params.id)
+  }
 
-  totalRemuneration = 5
+  get paimentPrice () {
+    return (this.storeOrder.price / 19 + 0.001 * this.storeOrder.price * this.storeOrder.distance).toFixed(2)
+  }
+
+  updateComponent: number = 0
+  totalRemuneration: number = 5
+  status:string = this.storeOrder.status
 
   currentLocation: {} = {}
   circleOptions: {} = {}
@@ -117,6 +125,23 @@ export default class Delivery extends Vue {
       textColor: '#fff'
     }
   ]
+
+  dateFormat (dateString: number): string {
+    const date = new Date(dateString)
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }
+    // @ts-ignore
+    return date.toLocaleDateString('fr', options)
+  }
+
+  async changeStatus (status: EOrderState) {
+    const changedOrder = await OrderStore.updateOrderMeStatus(this.storeOrder._id, status)
+    this.updateComponent += 1
+    this.status = changedOrder.status
+  }
 }
 </script>
 
