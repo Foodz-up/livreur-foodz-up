@@ -20,6 +20,10 @@ export default {
     middleware: ['auth']
   },
 
+  server: {
+    port: 3002 // default: 3000
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/foodz-components',
