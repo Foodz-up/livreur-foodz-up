@@ -28,11 +28,9 @@ class OrderStore extends BaseStoreService<OrderState> {
 
   async getOrders () {
     try {
-      console.log({ torder: typeof this.orders })
       const orders = await axios().get('orders/driver')
       if (orders.status === 200 && orders.data.orders.length > 0) {
         this.addOrders(orders.data.orders)
-        console.log({ order: orders })
       }
     } catch (error: any) {
       NotificationStore.addNotification({ message: error.response.data.message, status: error.response.status })
@@ -44,7 +42,6 @@ class OrderStore extends BaseStoreService<OrderState> {
       const orders = await axios().get('orders/me/driver')
       if (orders.status === 200 && orders.data.orders.length > 0) {
         this.addOrdersMe(orders.data.orders)
-        console.log({ orderme: orders })
       }
     } catch (error: any) {
       NotificationStore.addNotification({ message: error.response.data.message, status: error.response.status })
@@ -83,7 +80,6 @@ class OrderStore extends BaseStoreService<OrderState> {
     try {
       const order = await axios().patch('orders/update', { orderId, status, driver })
 
-      console.log({ updateorder: order })
       if (order.status === 200) {
         this.removeOrder(order.data.order._id)
         this.addOrderMe(order.data.order)
@@ -95,17 +91,13 @@ class OrderStore extends BaseStoreService<OrderState> {
 
   async updateOrderMeStatus (orderId: string, status: EOrderState): Promise<IOrder | undefined> {
     try {
-      console.log({ auth: AuthStore.user })
-
       const order = await axios().patch('orders/update', { orderId, status, driver: AuthStore.user })
 
       if (order.status === 200) {
-        console.log({ updatemestatus: order })
         this.commit(this.mutations.updateOrderMe, order.data.order)
         return order.data.order
       }
     } catch (error: any) {
-      console.log({ data: error })
       NotificationStore.addNotification({ message: error.response.data.message, status: error.response.status })
     }
   }

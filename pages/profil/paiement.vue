@@ -68,7 +68,6 @@ export default class ProfileCard extends Vue {
 
   // TODO: saveCard function
   saveCard () {
-    console.log({ formCard: this.formCard })
   }
 
   // TODO: deleteCard function

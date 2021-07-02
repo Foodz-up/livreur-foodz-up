@@ -25,9 +25,7 @@ export const OrderStoreModule = {
       state.orders[orderSelected] = orderUpdate
     },
     addOrders (state: OrderState, orders: Array<IOrder>) {
-      console.log({ ordersStore: orders })
       state.orders = [...state.orders, ...orders]
-      console.log({ ordersStoreState: state.orders })
     },
     addOrdersMe (state: OrderState, ordersMe: Array<IOrder>) {
       state.ordersMe = [...state.ordersMe, ...ordersMe]
