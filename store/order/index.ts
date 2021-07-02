@@ -83,6 +83,8 @@ class OrderStore extends BaseStoreService<OrderState> {
       if (order.status === 200) {
         this.removeOrder(order.data.order._id)
         this.addOrderMe(order.data.order)
+        NotificationStore.addNotification({ message: order.data.message, status: order.status })
+        console.log({ store: this.orderMe })
       }
     } catch (error: any) {
       NotificationStore.addNotification({ message: error.response.data.message, status: error.response.status })
@@ -95,6 +97,8 @@ class OrderStore extends BaseStoreService<OrderState> {
 
       if (order.status === 200) {
         this.commit(this.mutations.updateOrderMe, order.data.order)
+
+        NotificationStore.addNotification({ message: order.data.message, status: order.status })
         return order.data.order
       }
     } catch (error: any) {

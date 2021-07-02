@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LoadStatusOrder :key="updateComponent" :status="status" class="mb-8" @changeStatus="changeStatus" />
+    <LoadStatusOrder v-if="status" :key="updateComponent" :status="status" class="mb-8" @changeStatus="changeStatus" />
     <div class="flex flex-col md:flex-row">
       <div class="flex flex-col align-start p-6 bg-gray-50">
         <h1 class="text-2xl border-b-2 pb-5 border-black">
@@ -82,6 +82,8 @@ import LoadStatusOrder from '~/components/Others/LoadStatusOrder.vue'
 })
 export default class Delivery extends Vue {
   get storeOrder ():IOrder | undefined {
+    console.log({ gom: OrderStore.getOrderMe(this.$router.currentRoute.params.id) })
+
     return OrderStore.getOrderMe(this.$router.currentRoute.params.id)
   }
 

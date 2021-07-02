@@ -1,29 +1,36 @@
 <template>
-  <div v-if="storeOrdersMe">
-    <div v-for="(orderArrayByStatus, index) in splitedByStatus" :key="index" class="w-full mb-4">
-      <h1 class="text-4xl mb-5">
-        {{ orderArrayByStatus[0].status }}
-      </h1>
-      <div v-if="storeOrdersMe" class="grid grid-cols-1">
-        <nuxt-link v-for="order in orderArrayByStatus" :key="order._id" :to="`/livraisons/${order._id}`" class="grid grid-cols-3 gap-5 text-center bg-gray-50 p-5 border-b-2">
-          <p class="font-thin my-auto">
-            {{ order.restaurant.name }}
-          </p>
-          <p class="font-thin my-auto">
-            {{ order.distance }} km
-          </p>
-          <p class="font-thin my-auto">
-            {{ paimentPrice(order) }} €
-          </p>
-        </nuxt-link>
+  <div>
+    <div v-if="storeOrdersMe">
+      <div v-for="(orderArrayByStatus, index) in splitedByStatus" :key="index" class="w-full mb-4">
+        <h1 class="text-4xl mb-5">
+          {{ orderArrayByStatus[0].status }}
+        </h1>
+        <div v-if="storeOrdersMe" class="grid grid-cols-1">
+          <nuxt-link v-for="order in orderArrayByStatus" :key="order._id" :to="`/livraisons/${order._id}`" class="grid grid-cols-3 gap-5 text-center bg-gray-50 p-5 border-b-2">
+            <p class="font-thin my-auto">
+              {{ order.restaurant.name }}
+            </p>
+            <p class="font-thin my-auto">
+              {{ order.distance }} km
+            </p>
+            <p class="font-thin my-auto">
+              {{ paimentPrice(order) }} €
+            </p>
+          </nuxt-link>
+        </div>
       </div>
+    </div>
+    <div v-else>
+      <h1 class="text-4xl mb-5">
+        Vous n'avez pas de commandes en cours
+      </h1>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { EOrderState, IOrder } from '~/store/interfaces/order'
+import { IOrder } from '~/store/interfaces/order'
 import OrderStore from '~/store/order'
 
 @Component({
